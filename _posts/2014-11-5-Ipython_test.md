@@ -3,112 +3,111 @@ layout: post
 title: Ipython test
 ---
 
-    import numpy as np
-    import matplotlib.pyplot as plt
-    %matplotlib inline
-    import pandas as pd
-    
+
+Updating gitlab setup:
+
+```bash
+docker pull sameersbn/redis:latest
+docker pull sameersbn/gitlab:7.3.2-1
+docker pull sameersbn/postgresql:latest
 
 
+mkdir -p /opt/gitlab/data
+mkdir -p /opt/postgresql/data
 
-    def run(mu, sigma, p, n, r):
-        rs = [r, ]
-        
-        for i in range(n):
-            # create new idea
-            lift = np.random.normal(mu, sigma)
-            r_new = min(rs[-1]*(1.0+lift/100.0), 0.01)
-            r_correct = max(r_new, rs[-1])
-            r_incorrect = min(r_new, rs[-1])
-    
-            if np.random.binomial(1, p):
-                rs.append(r_correct)
-            else:
-                rs.append(r_incorrect)
-            
-        return rs
-            
+docker run --name=postgresql -d \
+  -e 'DB_NAME=gitlabhq_production' -e 'DB_USER=gitlab' -e 'DB_PASS=password' \
+  -v /opt/postgresql/data:/var/lib/postgresql \
+  sameersbn/postgresql:latest
+docker run --name=redis -d sameersbn/redis:latest
+
+docker run --name=gitlab -d \
+  --link postgresql:postgresql \
+  --link redis:redisio \
+  -p 10080:80 -p 10022:22 \
+  -v /opt/gitlab/data:/home/git/data \
+    sameersbn/gitlab:7.3.2-1
+```
 
 
-    def compare_trajectories(mu, sigma, p1, p2, n, r, repeat = 10):
-        fig = plt.figure(figsize=(10, 6), dpi=80)
-        ax = fig.add_subplot(111)
-        
-        d = pd.DataFrame()
-        for i in range(repeat):
-            d[i] = run(mu, sigma, p1, n, r)
-            
-        d2 = pd.DataFrame()
-        d2['mean'] = d.mean(axis=1)
-        d2['lower'] = d2['mean'] + 2*d.std(axis=1)
-        d2['upper'] = d2['mean'] - 2*d.std(axis=1)
-    
-        ax.plot(d2.index, d2['mean'], label= 'p1=%0.3f'%p1)
-        ax.fill_between(d2.index, d2['lower'], d2['upper'], alpha=0.31, edgecolor='#3F7F4C', facecolor='0.75',linewidth=0)
-        
-        
-        d = pd.DataFrame()
-        for i in range(repeat):
-            d[i] = run(mu, sigma, p2, n, r)
-            
-        d2 = pd.DataFrame()
-        d2['mean'] = d.mean(axis=1)
-        d2['lower'] = d2['mean'] + d.std(axis=1)
-        d2['upper'] = d2['mean'] - d.std(axis=1)
-    
-        ax.plot(d2.index, d2['mean'], label= 'p2=%0.3f'%p2)
-        ax.fill_between(d2.index, d2['lower'], d2['upper'], alpha=0.31, edgecolor='#3F7F4C', facecolor='0.75',linewidth=0)
-        ax.set_xlabel('num tests')
-        ax.set_ylabel('donation rate')
-        
-        ax.plot(d2.index, [r]*(n+1), label = 'base rate')
-        ax.legend()
-            
-        
+More consisely, do this with [fig](http://fig.sh)
+
+```yaml
+gitlab:
+  image: sameersbn/gitlab:7.3.2-1
+  links:
+   - postgres
+   - redis:redisio
+  ports:
+   - "10080:80"
+   - "10022:22"
+  volumes:
+    - /opt/gitlab/data:/home/git/data
+  environment:
+    - SMTP_USER=USER@gmail.com
+    - SMTP_PASS=PASSWORD
+
+postgres:
+  image: postgres:latest
+  volumes:
+    - /opt/postgresql/data:/var/lib/postgresql
+  environment:
+    - POSTGRESQL_USER=gitlab
+    - POSTGRESQL_PASS=
+    - POSTGRESQL_DB=gitlabhq_production
+redis:
+  image: redis:2.8.9
+```
+
+Hmm... memory error using the `fig` approach; doesn't happen when running individual containers as above...
 
 
-    def plot_improvements(mu, sigma):
-        x = np.arange(-45.0, 45.0, 0.5)
-        plt.xticks(np.arange(-45.0, 45.0, 5))
-        plt.plot(x, 1/(sigma * np.sqrt(2 * np.pi)) *np.exp( - (x - mu)**2 / (2 * sigma**2) ))
+Looks like we have to run the original version if we want to keep our database.  But no go since sql database information is lost:
+
+```bash
+docker pull gitlab:7.2.1-1
+docker run --name=gitlab -d \
+  -p 10080:80 -p 10022:22 \
+  -v /opt/gitlab/data:/home/git/data \
+    sameersbn/gitlab:7.2.1-1
+docker stop gitlab
+docker run --rm -it \
+  -p 20080:80 -p 20022:22 \
+  -v /opt/gitlab/data:/home/git/data \
+    sameersbn/gitlab:7.2.1-1 app:rake gitlab:backup:restore
+docker restart gitlab
+```
 
 
+## Drone
 
-    #Distribution over % Improvements
-    mu = -20.0
-    sigma = 12.0
-    
-    plot_improvements(mu, sigma)
-    
-    #Proability of making the correct decision
-    p1 = 0.6
-    p2 = 0.99
-    
-    #number of trials
-    n = 1000
-    #base donation rate
-    r = 0.0007
+Ah, Drone now provides their own Dockerfile, which we can grab and build for the latest Drone:
 
+```bash
+git clone https://github.com/drone/drone.git
+docker build -t drone/drone drone
+```
 
-![png](simulation_files/simulation_4_0.png)
+Then we can run, linking volumes appropriately: 
 
+```bash
+docker run --name drone -d -p 88:80 \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-t \
+-e DRONE_GITHUB_CLIENT=<clientkey> \
+-e DRONE_GITHUB_SECRET=<secretkey> \
+drone/drone"
+```
 
+Note that this doesn't work with a `drone.toml` file even when linking volumes etc., see [#580](https://github.com/drone/drone/issues/580). 
 
-    compare_trajectories(mu, sigma, p1, p2, n, r, repeat = 100)
-
-
-![png](simulation_files/simulation_5_0.png)
+Also note that this setup shares docker images with the host machine, rather than having a seperate library, which is rather good for saving space.  I believe this should be trivial to back-up (just by exporting the container), but have to test that stil.
 
 
-
-    0.007*(1.1**4)
-
+These rather verbose docker calls for drone and gitlab make a great use-case for fig.  Unfortunately, fig seems to crash out of memory on my tiny DO droplet, but running these commands manually works like a charm.  
 
 
+## DigitalOcean
 
-    0.010248700000000003
+Ooh: configure scripts for starting DO droplets.  e.g. automate the launch of [a more secure configuration](https://www.digitalocean.com/community/tutorials/how-to-use-cloud-config-for-your-initial-server-setup), looks like a more formal way than my shell script. /ht @hadley.
 
-
-
-
-    
