@@ -186,7 +186,7 @@ But let's throw in a <b>tag</b>.
     t.plot_impressions("ls", "mr",  smooth = 30)
 
 
-![png](10-27%20enUSlw%20highlight%20combined_files/10-27%20enUSlw%20highlight%20combined_4_0.png)
+![_config.yml]({{ site.baseurl }}/images/10-27%20enUSlw%20highlight%20combined_files/10-27%20enUSlw%20highlight%20combined_4_0.png)
 
 
 Looks like ls and mr where served equally. But we know from the individual
@@ -197,7 +197,7 @@ different rates
     t.plot_impressions( "B14_1027_enUS_ipd_hl_ls", "B14_1027_enUS_ipd_hl_mr", smooth = 30)
 
 
-![png](10-27%20enUSlw%20highlight%20combined_files/10-27%20enUSlw%20highlight%20combined_6_0.png)
+![_config.yml]({{ site.baseurl }}/images/10-27%20enUSlw%20highlight%20combined_files/10-27%20enUSlw%20highlight%20combined_6_0.png)
 
 
 On the ipad mr was shown more often starting on day 3
@@ -206,7 +206,7 @@ On the ipad mr was shown more often starting on day 3
     t.plot_impressions( "B14_1027_enUS_mob_hl_ls", "B14_1027_enUS_mob_hl_mr", smooth = 30)
 
 
-![png](10-27%20enUSlw%20highlight%20combined_files/10-27%20enUSlw%20highlight%20combined_8_0.png)
+![_config.yml]({{ site.baseurl }}/images/10-27%20enUSlw%20highlight%20combined_files/10-27%20enUSlw%20highlight%20combined_8_0.png)
 
 
 On mobile, ls was shown more often.
