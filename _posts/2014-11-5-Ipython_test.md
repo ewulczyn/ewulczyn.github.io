@@ -10,6 +10,7 @@ title: Ipython test
 ```python
 s = "Python syntax highlighting"
 print s
+print "t"
 ```
  
 ```
