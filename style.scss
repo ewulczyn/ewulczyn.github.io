@@ -300,6 +300,7 @@ tbody tr:nth-child(odd) th {
 code,
 pre {
   font-family: Menlo, Monaco, "Courier New", monospace;
+  
 }
 code {
   padding: .25em .5em;
@@ -317,7 +318,7 @@ pre {
   line-height: 1.4;
   white-space: pre;
   white-space: pre-wrap;
-  word-break: break-all;
+  word-break: normal;
   word-wrap: break-word;
   background-color: #f9f9f9;
 }
