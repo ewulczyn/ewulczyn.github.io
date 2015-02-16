@@ -134,14 +134,15 @@ $$
 \sum\limits_{i=n}^\infty{i*\binom{i}{n} r^{n+1} (1-r)^{i-n}} =
 $$
 
-$$
+\\[
 \sum\limits_{i^\prime=n^\prime}^\infty{(i^\prime -1)*\binom{i^\prime -1}{n^\prime -1} r^{n^\prime} (1-r)^{i^\prime-n^\prime}} =
-$$
+\\]
 
+<div> 
 $$
-\sum\limits_{i^\prime=n^\prime}^\infty{i^\prime * \binom{i^\prime -1}{n^\prime-1} r^{n^\prime} (1-r)^{i^\prime-n^\prime}} -
-\sum\limits_{i^\prime=n^\prime}^\infty{\binom{i^\prime -1}{n^\prime -1} r^{n^\prime} (1-r)^{i^\prime-n^\prime}}=
+\sum\limits_{i^\prime=n^\prime}^\infty{i^\prime * \binom{i^\prime -1}{n^\prime-1} r^{n^\prime} (1-r)^{i^\prime-n^\prime}} - \sum\limits_{i^\prime=n^\prime}^\infty{\binom{i^\prime -1}{n^\prime -1} r^{n^\prime} (1-r)^{i^\prime-n^\prime}}=
 $$
+</div> 
 
 $$
 \frac{n^\prime}{r} - 1 =
@@ -179,7 +180,7 @@ assume that our impressions is negative binomial.
 
 In traditional bayesian AB testing, we model a conversion as bernoulli random
 variable. We also model the conversion rate \\(p\\) as a random variable following a
-beta distribution. Before observing any data, we model \\(p\\) as \\(beta(a_{prior}, b_{prior})\\).
+beta distribution. Before observing any data, we model \\(p\\) as \\(beta(a, b)\\).
  Usually, we set \\(a_{prior}=b_{prior}=1\\), which corresponds to a
 uniform distribution over the interval \\([0,1]\\). After running a banner we count
 how many impressions led to a donation (successes) and how many impressions did
