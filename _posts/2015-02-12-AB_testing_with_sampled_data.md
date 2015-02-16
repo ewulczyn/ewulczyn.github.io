@@ -3,9 +3,6 @@ layout: post
 title: AB Testing With Sampled Data
 ---
 
-
-#AB Testing with Sampled Data
-
 The Wikimedia Foundation (WMF) is in the unique position that we have a ton of
 traffic and very little resources. When AB testing banners, we get so many
 impressions we have to sample the number of impressions we record. This
@@ -69,7 +66,7 @@ P(N=j | n) =
 $$
 
 $$
-\frac{P(n | N=j)*P(N=j)}{\sum\limits_{i=n}^N{P(n|N=i)*P(N=i)}}=
+\frac{P(n | N=j)P(N=j)}{\sum\limits_{i=n}^\infty{P(n|N=i)P(N=i)}}=
 $$
 
 $$
@@ -181,16 +178,16 @@ assume that our impressions is negative binomial.
 ## The Traditional Bayesian AB Test
 
 In traditional bayesian AB testing, we model a conversion as bernoulli random
-variable. We also model the conversion rate $$p$$ as a random variable following a
-beta distribution. Before observing any data, we model \\(p\\) as $$beta(a_{prior}, b_{prior})$$.
- Usually, we set $$a_{prior}=b_{prior}=1$$, which corresponds to a
-uniform distribution over the interval $$[0,1]$$. After running a banner we count
+variable. We also model the conversion rate \\(p\\) as a random variable following a
+beta distribution. Before observing any data, we model \\(p\\) as \\(beta(a_{prior}, b_{prior})\\).
+ Usually, we set \\(a_{prior}=b_{prior}=1\\), which corresponds to a
+uniform distribution over the interval \\([0,1]\\). After running a banner we count
 how many impressions led to a donation (successes) and how many impressions did
 not (failures).
 
 
-Then we update the distribution over $$p$$ to be  $$beta(a_{prior} + successes,
-b_{prior} + failures)$$. Once we have the distributions for the conversion rate
+Then we update the distribution over \\(p\\) to be  \\(beta(a_{prior} + successes,
+b_{prior} + failures)\\). Once we have the distributions for the conversion rate
 for each of the banners, we can use numerical methods to arrive at the
 distribution over functions of the conversion rates. We will be most interested
 in the distribution over the percent difference in conversion rates. For a more
@@ -198,7 +195,7 @@ thorough introduction to bayesian AB testing, check out this
 [post](http://engineering.richrelevance.com/bayesian-ab-tests/).
 
 The code below demonstrates running a traditional bayesian AB test, where
-the number of impressions are known in advance. In particular, we compute a 100-$$a$$% confidence
+the number of impressions are known in advance. In particular, we compute a 100-\\(a\\)% confidence
 interval for the percent lift that B gives over A. 
 
 ~~~python
@@ -255,8 +252,8 @@ removing impressions with the same ID as a donation.
 
 Lets start with a naive approach of simply using the expected number of failed
 impression given the sampling rate r and the number of observed failed
-impressions n: $$\frac{(n+1)}{r} - 1$$. We derived this result above. We will be interested in measuring how
-often our 100-$$a$$% confidence intervals for the lift that banner B has over banner
+impressions n: \\(\frac{(n+1)}{r} - 1\\). We derived this result above. We will be interested in measuring how
+often our 100-\\(a\\)% confidence intervals for the lift that banner B has over banner
 A cover the true lift. We can do this by repeatedly simulating AB tests and measuring
 what fraction of the time our lift intervals cover the true lift. More specifically, we will choose the true donation rate for both banners, 
 the sampling rate for failed impressions, the length of the experiment \\(N\\)
@@ -267,7 +264,7 @@ We then compute the confidence interval for the lift banner B gives over banner 
 the number of success and the fixed estimate of the total number of failures. We record how often
 the true lift, which we know because we choose the click through rates of the banners, is 
 covered by our confidence interval. If the method is correct, the intervals we construct will cover the 
-true lift 100-$$a$$% of the time.
+true lift 100-\\(a\\)% of the time.
 
 
 ~~~ python
@@ -349,7 +346,7 @@ The issue with the naive method is that we act as if we have complete certainty 
 of failed impressions. This assumption becomes more and more inaccurate as we increase the sampling
 rate. Lets fix this by incorporating the uncertainty we have in the number of failed
 impressions. We will do this by modifying how we sample from the posterior distribution over the donation rates.
-Above, we sample repeatedly from a beta with fixed parameters: \\(beta(1+\text{successes}, 1+\text{estimated\_failures})\\). Instead, lets repeatedly take a sample from the distribution over the total number of failures (total_failures_sample) and then sample from a beta with parameters \\(beta(1+{successes}, 1+\text{total_failures_sample})\\). In the code below, I sample from the negative binomial intsead of the inverse binomial. I do this because I have not yet implemented a generator for the inverse binomial and the negative binomial is agood approximation in most cases. I should also not that in numpy the negative binomial is parameterized in such a way that it returns the number of non-recorded failed impressions before the nth recorded failed impression. To get the total number of failed impressions, we need to add the number of recorded failed impressions to the numpy random variable.
+Above, we sample repeatedly from a beta with fixed parameters: \\(beta(1+\text{successes}, 1+\text{estimated\_failures})\\). Instead, lets repeatedly take a sample from the distribution over the total number of failures (total_failures_sample) and then sample from a beta with parameters \\(beta(1+{successes}, 1+\text{total\_failures\_sample})\\). In the code below, I sample from the negative binomial intsead of the inverse binomial. I do this because I have not yet implemented a generator for the inverse binomial and the negative binomial is agood approximation in most cases. I should also not that in numpy the negative binomial is parameterized in such a way that it returns the number of non-recorded failed impressions before the nth recorded failed impression. To get the total number of failed impressions, we need to add the number of recorded failed impressions to the numpy random variable.
 
 
 
