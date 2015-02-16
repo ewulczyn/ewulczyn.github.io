@@ -469,7 +469,7 @@ def expected_cost(a_clicks, a_impressions, b_clicks, b_impressions, num_samples=
     #form the distribution over the cost
     cost_dist = np.maximum((b_dist-a_dist), 0) 
     # return the expected cost
-    return .mean()
+    return cost_dist.mean()
 ```
 
     
