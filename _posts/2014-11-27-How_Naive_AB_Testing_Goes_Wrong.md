@@ -66,7 +66,7 @@ What follows is the development of a method that meets these ends. It is based o
 
 Before taking the leap from frequentist to Bayesian statistics, I want to explore the pros and cons of repeated hypothesis testing in a formal setting. Consider the following repeated testing procedure:
 
-```
+~~~
 while true:
     run each banner for n impressions
     evaluate a ttest on the difference in CTRs 
@@ -76,7 +76,7 @@ while true:
     if you hit the classically determined sample size:
         stop the test
         declare the winner unknown
-```
+~~~
 To paraphrase, we evaluate a hypothesis test every n records until we
 reach significance or hit the predetermined sample size. If we stopped
 because we hit significance, we declare the banner with the higher CTR at
@@ -111,7 +111,7 @@ will need to get more data on Banner B to form a tighter interval.
  For the following experiments I simulated 5000 impressions of a banner with CTR = 0.2
 and formed a 95% credible interval:
 
-```python
+~~~ ruby
 import numpy as np
 from numpy.random import beta, binomial
 
@@ -125,7 +125,7 @@ print 'Upper Bound %0.3f' % np.percentile(CTR_B_distribution, 97.5)
 
 Lower Bound 0.192
 Upper Bound 0.214
-```
+~~~
 
 
 Lets set MDE = 0.05, beta = 0.95, alpha = 0.05 and do a hypothesis test every n = 250 records. For the figures below, I ran the simulation 1000 times. The first plot shows the probability of deciding that banner A is the winner as a function of the percent lift A has over B. The second plot shows the expected number of samples needed per banner to stop the test, where the gray area indicates a 90% credible interval. 
@@ -449,10 +449,10 @@ that B is better that A and stop if P(CTR\_B > CTR\_A) is below a threshold. The
 rub is that if the banners really where the same, then P(CTR\_B < CTR\_A) should
 be 0.5. We are in the same situation as before,  where we are waiting for a false result to terminate our test. To avoid this, consider the following cost function (which is itself a random variable):
 
-```
+~~~
 f(CTR_A, CTR_B) =        0         if CTR_A > CTR_B
                   (CTR_B - CTR_A)  if CTR_B > CTR_A
-```
+~~~
 
 We incur 0 cost if CTR_A is greater then CTR_B and incur the difference in
 CTRs otherwise. We can run the test until the expected
