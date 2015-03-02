@@ -478,7 +478,6 @@ del df_post['in_count']
 
 ###Network Analysis
 
-
 We can think of Wikipedia as a network with articles as nodes and links between
 articles as edges. This network has been available for analysis via the
 production pagelinks table. But what does it mean if there is a link between
