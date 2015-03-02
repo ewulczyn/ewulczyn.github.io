@@ -3,7 +3,7 @@ layout: post
 title: Wikipedia Clickstream - Getting Started
 ---
 
-This post gives an introduction to working with the newly released [Wikipedia
+This post gives an introduction to working with the new February release of the [Wikipedia
 Clickstream](http://datahub.io/dataset/wikipedia-clickstream/resource/be85cc68-d1e6-4134-804a-fd36b94dbb82) dataset. The data shows
 how people get to a Wikipedia article and what articles they click on next. In
 other words,
@@ -188,7 +188,7 @@ df.groupby('curr').sum().sort('n', ascending=False)[:10]
 
 
 The most requested pages tend to be about media that was popular in February. The exceptions are the "Deaths\_in\_2015" article
-and the "Alive" disambiguation article. The "Main_Page" links to "Deaths\_in\_2015" and is the top referer to this article, which would explain the high number of requests. The fact that the "Alive" disambiguation page gets so many hits seems suspsect and is likely to be a fruitfull case to investigate to improve the bot filtering.
+and the "Alive" disambiguation article. The "Main\_Page" links to "Deaths\_in\_2015" and is the top referer to this article, which would explain the high number of requests. The fact that the "Alive" disambiguation page gets so many hits seems suspsect and is likely to be a fruitfull case to investigate to improve the bot filtering.
 
 ### Top Referers
 The clickstream data aslo let's us investigate who the top referers to Wikipedia
@@ -495,4 +495,6 @@ most up-to-date version of the data can be found at:
 
 Ellery Wulczyn, Dario Taraborelli (2015). Wikipedia Clickstream. *figshare.*
 [doi:10.6084/m9.figshare.1305770](http://dx.doi.org/10.6084/m9.figshare.1305770)
+
+An Ipython Notebook version of this post can be found [here](http://nbviewer.ipython.org/github/ewulczyn/wmf/blob/a541f67c92c93609a028f59d61920fef8a1f425e/clickstream/ipython/Wikipedia%20Clickstream%20-%20Getting%20Started.ipynb). Note that you will have to download the notebook and re-execute the code cells to get the output. 
 
