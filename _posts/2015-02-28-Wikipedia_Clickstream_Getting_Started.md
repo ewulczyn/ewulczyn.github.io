@@ -3,7 +3,7 @@ layout: post
 title: Wikipedia Clickstream - Getting Started
 ---
 
-This post gives an introduction to working with the newly released [Wikipedia
+This post gives an introduction to working with the new February release of the [Wikipedia
 Clickstream](http://datahub.io/dataset/wikipedia-clickstream/resource/be85cc68-d1e6-4134-804a-fd36b94dbb82) dataset. The data shows
 how people get to a Wikipedia article and what articles they click on next. In
 other words,
