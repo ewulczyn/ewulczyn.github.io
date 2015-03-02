@@ -188,7 +188,7 @@ df.groupby('curr').sum().sort('n', ascending=False)[:10]
 
 
 The most requested pages tend to be about media that was popular in February. The exceptions are the "Deaths\_in\_2015" article
-and the "Alive" disambiguation article. The "Main_Page" links to "Deaths\_in\_2015" and is the top referer to this article, which would explain the high number of requests. The fact that the "Alive" disambiguation page gets so many hits seems suspsect and is likely to be a fruitfull case to investigate to improve the bot filtering.
+and the "Alive" disambiguation article. The "Main\_Page" links to "Deaths\_in\_2015" and is the top referer to this article, which would explain the high number of requests. The fact that the "Alive" disambiguation page gets so many hits seems suspsect and is likely to be a fruitfull case to investigate to improve the bot filtering.
 
 ### Top Referers
 The clickstream data aslo let's us investigate who the top referers to Wikipedia
