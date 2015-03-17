@@ -496,5 +496,5 @@ most up-to-date version of the data can be found at:
 Ellery Wulczyn, Dario Taraborelli (2015). Wikipedia Clickstream. *figshare.*
 [doi:10.6084/m9.figshare.1305770](http://dx.doi.org/10.6084/m9.figshare.1305770)
 
-An IPython Notebook version of this post can be found [here](http://nbviewer.ipython.org/github/ewulczyn/wmf/blob/dd241618811536975b1837a654270b9614b7af2a/clickstream/ipython/Wikipedia%20Clickstream%20-%20Getting%20Started.ipynb).
+An IPython Notebook version of this post can be found [here](http://nbviewer.ipython.org/github/ewulczyn/wmf/blob/master/clickstream/ipython/Wikipedia%20Clickstream%20-%20Getting%20Started.ipynb).
 
