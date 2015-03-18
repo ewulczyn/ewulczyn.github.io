@@ -172,13 +172,15 @@ alpha = np.ones(values_a.shape)
 counts = run_banner(p_a, 1000)
 # get a sample from the distribution over revenue per impression
 return_distribution = get_posterior_reward_per_impression_sample(alpha, counts, values_a)
-# plot the posterior distribution agains the true value
-plt.hist(return_distribution, bins = 40, alpha = 0.6)
-plt.axvline(x=return_a, color = 'b')
+# plot the posterior distribution against the true value
+fig, ax = plt.subplots()
+ax.hist(return_distribution, bins = 40, alpha = 0.6, normed = True)
+ax.axvline(x=return_a, color = 'b')
+
 ~~~
 
 
-![_config.yml]({{ site.baseurl }}/images/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_11_1.png)
+![_config.yml]({{ site.baseurl }}/ipython/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_11_1.png)
 
 
 The above plot shows the histrogram representing the posterior distribution over \\(R\\). The 
@@ -187,16 +189,16 @@ As we run the banner longer and get more data, we should expect the distribution
 to concentrate around a tighter interval  around the true return.
 
 ~~~python
-counts = run_banner(p_a, 100000)
+counts = run_banner(p_a, 10000)
 return_distribution = get_posterior_reward_per_impression_sample(alpha, counts, values_a)
-plt.hist(return_distribution, bins = 40, alpha = 0.6)
-plt.axvline(x=return_a, color = 'b')
+ax.hist(return_distribution, bins = 40, alpha = 0.6, normed = True)
+ax.axvline(x=return_a, color = 'b')
 ~~~~
 
-![_config.yml]({{ site.baseurl }}/images/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_13_1.png)
+![_config.yml]({{ site.baseurl }}/ipython/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_13_0.png)
 
-Indeed we see that the interval of plausible values shrunk from (1.5, 1.8) when running the banner 1000 times
-to (1.59, 1.62) when running the banners 100000 times.
+Indeed we see that the interval of plausible values shrunk from (1.45, 1.65) when running the banner 1000 times
+to (1.58, 1.65) when running the banners 10000 times.
 
 ###Introducing Credible Intervals
 
