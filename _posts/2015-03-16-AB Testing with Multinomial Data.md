@@ -40,7 +40,7 @@ amounts. The image below shows a sample banner:
 
 
 
-![_config.yml]({{ site.baseurl }}/images/AB%20Testing%20with%20Multinomial%20Data_files/sample_banner.png)
+![_config.yml]({{ site.baseurl }}/ipython/AB%20Testing%20with%20Multinomial%20Data_files/sample_banner.png)
 
 
 In this case, there are 7 discrete amount choices given. There is, of course,
@@ -52,7 +52,7 @@ donation amounts from a recent test. Even visually, we get the impression that
 the fixed amounts dominate the character of the distribution.
 
 
-![_config.yml]({{ site.baseurl }}/images/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_5_0.png)
+![_config.yml]({{ site.baseurl }}/ipython/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_5_0.png)
 
 
 A clear choice for modeling the distribution over fixed donation amounts is the
@@ -302,16 +302,16 @@ prob_a_better = (return_distribution_a > return_distribution_b).mean()
 print "P(R_A > R_B) = %0.4f" % prob_a_better
 
 
-P(R_A > R_B) = 0.9771
+P(R_A > R_B) = 0.83.94
 ~~~
 
 
-![_config.yml]({{ site.baseurl }}/images/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_20_1.png)
+![_config.yml]({{ site.baseurl }}/ipython/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_20_1.png)
 
 
 The plot depicts the posterior distributions over \\(R\_a\\)  \\(R\_a\\) along with the
-true values. On this particular run, banner A did better than expected and banner B did worse
-than expected.  Judging from the data we observe, we are 97% certain that banner
+true values. On this particular run,both banners did slightly better than expected.
+Judging from the data we observe, we are 84% certain that banner
 A is better than banner B. Looking at one particular run, is not particularly
 instructive. For a given true difference \\(R\_a - R\_b\\) in expected rewards, the
 key factor that influences \\(\mathcal P \left({R\_a > R\_b | Data}\right)\\) is the
@@ -338,7 +338,7 @@ plt.ylabel('P(R_A > R_B)')
 ~~~
 
 
-![_config.yml]({{ site.baseurl }}/images/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_22_1.png)
+![_config.yml]({{ site.baseurl }}/ipython/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_22_1.png)
 
 
 The plot illustrates an intuitive fact: the longer you run the test, the more
@@ -394,11 +394,11 @@ The percent lift that A has over B lies in the interval (-1.542, 8.604) with 95%
 ~~~
 
 
-![_config.yml]({{ site.baseurl }}/images/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_25_1.png)
+![_config.yml]({{ site.baseurl }}/ipython/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_25_1.png)
 
 
 In truth, banner A is 6% better than banner B. For this particular run, our method is 
-95% certain that banner A is between (-1.542, 8.604) better than banner B. To test the accurracy of the method, we can repeat the exercise from above of
+95% certain that banner A is between (-1.542%, 8.604%) better than banner B. To test the accurracy of the method, we can repeat the exercise from above of
 repeatedly generating confidence intervals and seeing if our x% confidence
 intervals cover the true percent difference x% of the time. You will see that
 they do:
@@ -411,8 +411,8 @@ cover_count = 0.0
 
 for i in range(iters):
     #simulate running the banner
-    counts_a = run_banner(p\_a, 4000)
-    counts_b = run_banner(p\_b, 4000)
+    counts_a = run_banner(p_a, 4000)
+    counts_b = run_banner(p_b, 4000)
     # get the posterior distribution over percent difference
     return_distribution_a = get_posterior_reward_per_impression_sample(alpha, counts_a, values_a)
     return_distribution_b = get_posterior_reward_per_impression_sample(alpha, counts_b, values_b)
