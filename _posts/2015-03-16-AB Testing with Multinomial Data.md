@@ -10,7 +10,7 @@ successful conversion can lead to different amounts of reward. So while one
 design might give a high success rate but low reward per success, another design
 might have a low success rate but very high reward per success. We often care
 most about the expected reward of a design. If we just compare success rates and
-choose the design with the higher rate, we are not necessarilly choosing the
+choose the design with the higher rate, we are not necessarily choosing the
 option with the higher expected reward. This post discusses how to do AB testing
 when the reward per impression is limited to a set of fixed values. In
 particular, I demonstrate bayesian computational techniques for determining:
@@ -25,12 +25,12 @@ two designs**
 ###A Motivating Example
 
 To motivate the methods, let me give you a concrete use case. The Wikimedia
-Foundation (WMF) does extensive AB testing on their fundraising bannners.
+Foundation (WMF) does extensive AB testing on their fundraising banners.
 Usually, the fundraising team only compares the success rate of banners because
 they are optimizing for a broad donor base. As the budget continues to grow, it
-has become more important drive the dontation amount per impression as well.
+has become more important drive the donation amount per impression as well.
 There are several factors that influence how much people give, including the ask
-string, the set of suggested donation amounts and the payment proccessor
+string, the set of suggested donation amounts and the payment processor
 options. In order to increase the revenue per banner impression in a principled
 way, it is necessary to AB test the revenue per impression for different
 designs.
@@ -44,7 +44,7 @@ amounts. The image below shows a sample banner:
 
 
 In this case, there are 7 discrete amount choices given. There is, of course,
-the implicit choice of $0, which a client excersizes when they do not donate at
+the implicit choice of $0, which a client exercises when they do not donate at
 all. In addition to the set of fixed choices, there is an option to enter a
 custom amount. In practice, only 2% of donors use the custom amount option. The
 image below gives an example of the empirical distribution over positive
@@ -57,17 +57,17 @@ the fixed amounts dominate the character of the distribution.
 
 A clear choice for modeling the distribution over fixed donation amounts is the
 multinomial distribution. For modeling custom donations amounts, we could
-consider a continous distribution over the set of positive numbers such as the
+consider a continuous distribution over the set of positive numbers such as the
 lognormal distribution. Then we could model the distribution of over both fixed
 and custom amounts as a mixture between the two. For now,  I will focus on just
 modeling the distribution over fixed amounts as they make up the vast majority
 of donations.
 
 ### A primer on Bayesian Stats and Monte Carlo Methods
-The key to doing Baysian AB testing is to be able to sample from the joint
+The key to doing Bayesian AB testing is to be able to sample from the joint
 posterior distribution \\(\mathcal P \left({p\_a, p\_b | Data}\right)\\) over the
 parameters \\(p\_a\\), \\(p\_b\\) governing the data generating distributions. Note that
-in the Bayesian setting, we consider the unkown paremters of our data generating
+in the Bayesian setting, we consider the unknown parameters of our data generating
 distribution as random variables. In our case study, the parameters of interest
 are the vectors parameterizing the multinomial distributions over donation
 amounts for each banner.
@@ -81,7 +81,7 @@ over regions of of the parameter space that are of interest. In many cases, \\(p
 is independent of \\(p\_b\\). This is true in our fundraising example where clients
 are split into non-overlapping treatment groups and the clients in one treatment
 group do not affect clients in the other. A common scenario where independence
-does not hold, even for seperate treatment groups, is when the groups share a
+does not hold, even for separate treatment groups, is when the groups share a
 common pool of resources to choose from. To give a concrete example, say you are
 a hotel booking site. AB testing aspects of the booking process can be hard
 since booking outcomes between the two groups interact: if a client in one group
@@ -119,14 +119,14 @@ posterior distribution over \\(p\\) is \\(Dirichlet(\alpha + c)\\).
 
 The expected reward of a banner is given by \\(R = p^T \cdot v\\), the dot product
 between the vector of reward values and and the vector of probabilities over
-reward vlaues. We can sample from the posterior distribution over the expected
+reward values. We can sample from the posterior distribution over the expected
 revenue per impression by sampling from \\(Dirichlet(\alpha + c)\\) distribution and
 then taking a dot product between that sample and the vector of values \\(v\\).
 
 ### From Theory to Code
 
 To make the above theory more concrete, lets simulate running a single banner
-and use the ideas from above to model the expected return per immpression.
+and use the ideas from above to model the expected return per impression.
 
 ~~~python
 
@@ -183,7 +183,7 @@ ax.axvline(x=return_a, color = 'b')
 ![_config.yml]({{ site.baseurl }}/ipython/AB%20Testing%20with%20Multinomial%20Data_files/AB%20Testing%20with%20Multinomial%20Data_11_1.png)
 
 
-The above plot shows the histrogram representing the posterior distribution over \\(R\\). The 
+The above plot shows the histogram representing the posterior distribution over \\(R\\). The 
 dark blue vertical line depicts the true value of \\(R\\).
 As we run the banner longer and get more data, we should expect the distribution
 to concentrate around a tighter interval  around the true return.
@@ -202,7 +202,7 @@ to (1.58, 1.65) when running the banners 10000 times.
 
 ###Introducing Credible Intervals
 
-One of the most usefull things we can do with our posterior distribution over
+One of the most useful things we can do with our posterior distribution over
 revenue per impression is to build credible intervals. A 95% credible interval
 represents an interval that contains the true revenue per impression with 95%
 certainty. The simplest way to generate credible intervals from a sample is to
@@ -260,8 +260,8 @@ performance of banners.
 
 ### My Banner Is Better Than Yours
 
-The simplist question one can ask in an AB test is: What is the probability that
-design A is better than design B? More specificaly, what is the probability that
+The simplest question one can ask in an AB test is: What is the probability that
+design A is better than design B? More specifically, what is the probability that
 \\(R\_a\\), the reward per impression of A, is greater than  \\(R\_b\\), the reward per
 impression of B. Mathematically, this corresponds to integrating the joint
 posterior distribution over reward per impression \\(\mathcal P \left({R\_a, R\_b |
@@ -362,7 +362,7 @@ difference between designs.  We can get a sample from the distribution over the
 percent difference \\(\mathcal P \left({ 100 * \frac{R\_a - R\_b}{ R\_b}| Data
 }\right)\\), by taking a sample \\((r\_a, r\_b)\\) from \\(\mathcal P \left({R\_a,  R\_b|
 Data }\right)\\) and applying the percent difference function to it. Once we have
-a distrintion, we can from confidence intervals using quantiles as described
+a distribution, we can from confidence intervals using quantiles as described
 above.
 
 ~~~python
@@ -398,7 +398,7 @@ The percent lift that A has over B lies in the interval (-1.542, 8.604) with 95%
 
 
 In truth, banner A is 6% better than banner B. For this particular run, our method is 
-95% certain that banner A is between (-1.542%, 8.604%) better than banner B. To test the accurracy of the method, we can repeat the exercise from above of
+95% certain that banner A is between (-1.542%, 8.604%) better than banner B. To test the accuracy of the method, we can repeat the exercise from above of
 repeatedly generating confidence intervals and seeing if our x% confidence
 intervals cover the true percent difference x% of the time. You will see that
 they do:
@@ -427,7 +427,7 @@ print "%d%% credible interval covers true percent difference %.3f%% of the time"
 95% credible interval covers true percent difference 95.300% of the time
 ~~~
 
-That concludes my discusison of bayesian techniques for AB testing designs where
+That concludes my discussion of Bayesian techniques for AB testing designs where
 the reward per design is limited to a discrete set of values. I welcome feedback
 and questions in the comments section below. See [here](http://nbviewer.ipython.org/github/ewulczyn/ewulczyn.github.io/blob/master/ipython/AB%20Testing%20with%20Multinomial%20Data.ipynb) for an Ipython Notebook version of this post
 that you can use to play with the simulations.

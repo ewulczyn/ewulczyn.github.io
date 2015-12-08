@@ -188,7 +188,7 @@ df.groupby('curr').sum().sort('n', ascending=False)[:10]
 
 
 The most requested pages tend to be about media that was popular in February. The exceptions are the "Deaths\_in\_2015" article
-and the "Alive" disambiguation article. The "Main\_Page" links to "Deaths\_in\_2015" and is the top referer to this article, which would explain the high number of requests. The fact that the "Alive" disambiguation page gets so many hits seems suspsect and is likely to be a fruitfull case to investigate to improve the bot filtering.
+and the "Alive" disambiguation article. The "Main\_Page" links to "Deaths\_in\_2015" and is the top referer to this article, which would explain the high number of requests. The fact that the "Alive" disambiguation page gets so many hits seems suspect and is likely to be a fruitful case to investigate to improve the bot filtering.
 
 ### Top Referers
 The clickstream data aslo let's us investigate who the top referers to Wikipedia
@@ -250,7 +250,7 @@ df.groupby('prev').sum().sort('n', ascending=False)[:10]
 The top referer by a large margin is Google. Next comes refererless traffic
 (usually clients using HTTPS). Then come other language Wikipedias and pages in
 English Wikipedia that are not in the main (i.e. article) namespace. Bing
-directs significanlty more traffic to Wikipedia than Yahoo. Social media
+directs significantly more traffic to Wikipedia than Yahoo. Social media
 referals are tiny compared to Google, with twitter leading 10x more requests
 to Wikipedia than Facebook.
 
@@ -342,7 +342,7 @@ df_redlinks.groupby('curr').sum().sort('n', ascending=False)[:5]
 
 ### Searching Within Wikipedia
 
- Usually, clients navigate from one article to another through follwing a link.
+ Usually, clients navigate from one article to another through following a link.
 The other prominent case is search. The article from which the user searched is
 also passed as the referer to the found article. Hence, you will find a high
 count of `(Wikipedia, Chris_Kyle)` tuples. People went to the "Wikipedia"

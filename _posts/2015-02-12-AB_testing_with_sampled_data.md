@@ -12,8 +12,8 @@ running an AB test with unsampled impression counts, all the uncertainty in true
 conversion rates comes from the fact that a conversion is a random event and we
 have a finite number of impressions. However, if we sample the number of
 impressions, we also need to deal with the uncertainty in the number of banners
-we actually served! What follows is an extension the bayesian hypothesis test
-for bernoulli data that accounts for the additonal uncertainty introduced by
+we actually served! What follows is an extension the Bayesian hypothesis test
+for bernoulli data that accounts for the additional uncertainty introduced by
 sampling.
 
 
@@ -35,8 +35,8 @@ the banner will be displayed server side and avoid sending the request. Well,
 the WMF infrastructure is designed to serve requests for non logged-in users out
 of cache, even banners. As such it is not possible to evaluate if the banner
 should be shown based on the client's fundraising cookies server-side. I'm sure
-there are ways to get around sampling, but the fact that impressons are sampled
-is a constraint I currenlty face.
+there are ways to get around sampling, but the fact that impressions are sampled
+is a constraint I currently face.
 
 ##Estimating the number of Impressions
 
@@ -178,7 +178,7 @@ assume that our impressions is negative binomial.
 
 ## The Traditional Bayesian AB Test
 
-In traditional bayesian AB testing, we model a conversion as bernoulli random
+In traditional Bayesian AB testing, we model a conversion as bernoulli random
 variable. We also model the conversion rate \\(p\\) as a random variable following a
 beta distribution. Before observing any data, we model \\(p\\) as \\(beta(a\_{prior}, b\_{prior})\\).
  Usually, we set \\(a\_{prior}=b\_{prior}=1\\), which corresponds to a
@@ -192,10 +192,10 @@ b\_{prior} + failures)\\). Once we have the distributions for the conversion rat
 for each of the banners, we can use numerical methods to arrive at the
 distribution over functions of the conversion rates. We will be most interested
 in the distribution over the percent difference in conversion rates. For a more
-thorough introduction to bayesian AB testing, check out this
+thorough introduction to Bayesian AB testing, check out this
 [post](http://engineering.richrelevance.com/bayesian-ab-tests/).
 
-The code below demonstrates running a traditional bayesian AB test, where
+The code below demonstrates running a traditional Bayesian AB test, where
 the number of impressions are known in advance. In particular, we compute a 100-\\(a\\)% confidence
 interval for the percent lift that B gives over A. 
 
@@ -347,7 +347,7 @@ The issue with the naive method is that we act as if we have complete certainty 
 of failed impressions. This assumption becomes more and more inaccurate as we increase the sampling
 rate. Lets fix this by incorporating the uncertainty we have in the number of failed
 impressions. We will do this by modifying how we sample from the posterior distribution over the donation rates.
-Above, we sample repeatedly from a beta with fixed parameters: \\(beta(1+\text{successes}, 1+\text{estimated\_failures})\\). Instead, lets repeatedly take a sample from the distribution over the total number of failures (total_failures_sample) and then sample from a beta with parameters \\(beta(1+{successes}, 1+\text{total\_failures\_sample})\\). In the code below, I sample from the negative binomial intsead of the inverse binomial. I do this because I have not yet implemented a generator for the inverse binomial and the negative binomial is agood approximation in most cases. I should also not that in numpy the negative binomial is parameterized in such a way that it returns the number of non-recorded failed impressions before the nth recorded failed impression. To get the total number of failed impressions, we need to add the number of recorded failed impressions to the numpy random variable.
+Above, we sample repeatedly from a beta with fixed parameters: \\(beta(1+\text{successes}, 1+\text{estimated\_failures})\\). Instead, lets repeatedly take a sample from the distribution over the total number of failures (total_failures_sample) and then sample from a beta with parameters \\(beta(1+{successes}, 1+\text{total\_failures\_sample})\\). In the code below, I sample from the negative binomial instead of the inverse binomial. I do this because I have not yet implemented a generator for the inverse binomial and the negative binomial is a good approximation in most cases. I should also not that in numpy the negative binomial is parameterized in such a way that it returns the number of non-recorded failed impressions before the nth recorded failed impression. To get the total number of failed impressions, we need to add the number of recorded failed impressions to the numpy random variable.
 
 
 
@@ -367,4 +367,4 @@ posterior distribution over the donation rates as described above.
 
 ![_config.yml]({{ site.baseurl }}/images/AB_testing_with_sampled_data_files/AB_testing_with_sampled_data_32_0.png)
 
-Wondeful! We get 90% confidence intervals that cover the true lift 90% of the time, even as we ramp up the sampling rate. I am embarrassed to say that I cannot provide a proof for why this method works. If you have one, I invite you to link to it in the comments.
+Wonderful! We get 90% confidence intervals that cover the true lift 90% of the time, even as we ramp up the sampling rate. I am embarrassed to say that I cannot provide a proof for why this method works. If you have one, I invite you to link to it in the comments.
