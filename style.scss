@@ -305,7 +305,6 @@ pre {
 code {
   padding: .25em .5em;
   font-size: 85%;
-  color: #bf616a;
   background-color: #f9f9f9;
   border-radius: 3px;
 }
@@ -329,14 +328,9 @@ pre code {
   background-color: transparent;
 }
 
-/* Pygments via Jekyll */
-.highlight {
-  margin-bottom: 1rem;
-  border-radius: 4px;
-}
-.highlight pre {
-  margin-bottom: 0;
-}
-// Settled on moving the import of syntax highlighting to the bottom of the CSS
-// ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "_highlights";
+
+
+.img-circle {
+    border-radius: 50%;
+}

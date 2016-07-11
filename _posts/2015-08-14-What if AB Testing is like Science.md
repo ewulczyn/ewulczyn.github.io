@@ -21,90 +21,88 @@ Lets start with a control banner with some fixed baseline CTR. At each iteration
 For those who are interested, this section describes the simulation code. The <span style="font-family: 'Courier';">run\_test</span> function, simulates running a single AB test. The parameters ***mu*** and ***sigma*** characterize \\(G\\). The parameters ***alpha***, ***beta*** and ***mde*** correspond to the significance, power and minimum effect size of the hypothesis test used to determine if the new design beat the control. Finally ***control_ctr*** is the CTR of the control banner. This function simulates the creation of a new design, computing a sample size \\(n\\) based on ***control_ctr***, ***alpha***, ***beta*** and ***mde***, running the control and new design for \\(n\\) iterations, and choosing the winning design.
 
 ~~~python
+import numpy as np
+from scipy.stats import chi2_contingency
+from statsmodels.stats.power import tt_ind_solve_power
 
-    import numpy as np
-    from scipy.stats import chi2_contingency
-    from statsmodels.stats.power import tt_ind_solve_power
-    
-    
-    def sample_size_calculator(u_hat, mde=0.05, alpha=0.05, power=0.95):
-        var_hat = u_hat*(1-u_hat)
-        es =  (u_hat - (u_hat*(1+mde))) / np.sqrt(var_hat)
-        sample_size = tt_ind_solve_power(effect_size=es, alpha=alpha, power=power)
-        return sample_size
-    
-    
-    def run_test(mu, sigma, alpha, beta, mde, control_ctr, ):
-        # create treatment banner with a lift drawn from the lift distribution
-        lift = np.random.normal(mu, sigma)
-        treatment_ctr = min(0.9, control_ctr*(1.0+lift/100.0))
-    
-        # run null hypothesis test with a fixed sample size
-        N = sample_size_calculator(control_ctr, mde=mde, alpha=alpha, power=beta)
-        n_c = np.random.binomial(N, control_ctr);
-        n_t = np.random.binomial(N, treatment_ctr);
-        p = chi2_contingency(np.array([[N-n_c,n_c], [N-n_t, n_t]]))[1]
-    
-        # if p > alpha, stick with the control
-        if p > alpha:
-            #return  control_ctr 
-            return treatment_ctr
-    
-        # other wise pick the winner
+
+def sample_size_calculator(u_hat, mde=0.05, alpha=0.05, power=0.95):
+    var_hat = u_hat*(1-u_hat)
+    es =  (u_hat - (u_hat*(1+mde))) / np.sqrt(var_hat)
+    sample_size = tt_ind_solve_power(effect_size=es, alpha=alpha, power=power)
+    return sample_size
+
+
+def run_test(mu, sigma, alpha, beta, mde, control_ctr, ):
+    # create treatment banner with a lift drawn from the lift distribution
+    lift = np.random.normal(mu, sigma)
+    treatment_ctr = min(0.9, control_ctr*(1.0+lift/100.0))
+
+    # run null hypothesis test with a fixed sample size
+    N = sample_size_calculator(control_ctr, mde=mde, alpha=alpha, power=beta)
+    n_c = np.random.binomial(N, control_ctr);
+    n_t = np.random.binomial(N, treatment_ctr);
+    p = chi2_contingency(np.array([[N-n_c,n_c], [N-n_t, n_t]]))[1]
+
+    # if p > alpha, stick with the control
+    if p > alpha:
+        #return  control_ctr 
+        return treatment_ctr
+
+    # other wise pick the winner
+    else:
+        if n_c > n_t:
+            return control_ctr
         else:
-            if n_c > n_t:
-                return control_ctr
-            else:
-                return treatment_ctr
+            return treatment_ctr
 ~~~       
 
 The  <span style="font-family: 'Courier';">run\_campaign</span> implements running a sequence of ***num_tests*** AB tests starting with a ***base_rate*** CTR.
 
 ~~~python
-
-    def run_campaign(mu, sigma, alpha, beta, mde, base_rate, num_tests):
-        true_rates = [base_rate, ]
-        
-        for i in range(num_tests):
-            
-            #the control of the current test is the winner of the last test
-            control_rate = true_rates[-1]
+def run_campaign(mu, sigma, alpha, beta, mde, base_rate, num_tests):
+    true_rates = [base_rate, ]
     
-            true_rates.append (run_test(mu, sigma, alpha, beta, mde, control_rate))
-           
-        return true_rates
+    for i in range(num_tests):
+        
+        #the control of the current test is the winner of the last test
+        control_rate = true_rates[-1]
+
+        true_rates.append (run_test(mu, sigma, alpha, beta, mde, control_rate))
+       
+    return true_rates
 ~~~            
 
 The <span style="font-family: 'Courier';">expected\_campaign\_results</span> function implements running ***sim_runs*** campaigns with the same starting conditions. It generates a plot depicting the expected CTR \\(\pm 2 \sigma\\) as a function of the number of AB tests in the campaign. 
 
 ~~~python
+import matplotlib.pyplot as plt
+import pandas as pd
 
-    import matplotlib.pyplot as plt
-    import pandas as pd
+def expected_campaign_results(mu, sigma, alpha, beta, mde, base_rate, num_tests,\
+sim_runs):
+    fig = plt.figure(figsize=(10, 6), dpi=80)
     
-    def expected_campaign_results(mu, sigma, alpha, beta, mde, base_rate, num_tests,\
-    sim_runs):
-        fig = plt.figure(figsize=(10, 6), dpi=80)
+    d = pd.DataFrame()
+    for i in range(sim_runs):
+        d[i] = run_campaign(mu, sigma, alpha, beta, mde, base_rate, num_tests)
         
-        d = pd.DataFrame()
-        for i in range(sim_runs):
-            d[i] = run_campaign(mu, sigma, alpha, beta, mde, base_rate, num_tests)
-            
-        d2 = pd.DataFrame()
-        d2['mean'] = d.mean(axis=1)
-        d2['lower'] = d2['mean'] + 2*d.std(axis=1)
-        d2['upper'] = d2['mean'] - 2*d.std(axis=1)
-        
-        plt.plot(d2.index, d2['mean'], label= 'CTR')
-        plt.fill_between(d2.index, d2['lower'], d2['upper'], alpha=0.31, \
-        edgecolor='#3F7F4C', facecolor='0.75',linewidth=0)
-        
-        plt.xlabel('num tests')
-        plt.ylabel('CTR')
-        
-        plt.plot(d2.index, [base_rate]*(num_tests+1), label = 'Start CTR')
-        plt.legend()   
+    d2 = pd.DataFrame()
+    d2['mean'] = d.mean(axis=1)
+    d2['lower'] = d2['mean'] + 2*d.std(axis=1)
+    d2['upper'] = d2['mean'] - 2*d.std(axis=1)
+    
+    plt.plot(d2.index, d2['mean'], label= 'CTR')
+    plt.fill_between(d2.index, d2['lower'], d2['upper'], alpha=0.31, \
+    edgecolor='#3F7F4C', facecolor='0.75',linewidth=0)
+    
+    plt.xlabel('num tests')
+    plt.ylabel('CTR')
+    
+    plt.plot(d2.index, [base_rate]*(num_tests+1), label = 'Start CTR')
+    plt.legend()   
 ~~~
+
 ## Simulations
 
 
@@ -176,12 +174,3 @@ The results also suggest that it would be immensely useful to know which of thes
 
 
 If you have already run a series of tests, you could gage where you stand by looking at the distribution over the empirical gains of your new designs. For example, in the first simulation, gains are normally distributed with mean -5 and standard error 3. Lets assume that the true distribution over gains is also normally distributed. You could use the observed empirical gains to estimate the mean and standard error of the true distribution. I currently don't have a way of quantifying the uncertainty in these estimates, but it seems like a fun problem to explore next!
-
-
-
-
-
-
-
-
-    

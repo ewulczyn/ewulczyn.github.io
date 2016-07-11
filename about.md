@@ -4,12 +4,6 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+<img src="{{ site.baseurl }}/images/portrait.png" width="25%" align="right">
 
-### More Information
-
-A place to include any other types of information that you'd like to include about yourself. 
-
-### Contact me
-
-[email@domain.com](mailto:email@domain.com)
+Hello! My name is Ellery Wulczyn. I'm originally from Germany but now live in the Bay Area. I studied computer science, statistics and machine learning at Stanford University and am interested in using computational methods to study and enhance (web­-based) social systems. I currently work as a Data Scientist at the Wikimedia Foundation, which is the parent organization of Wikipedia, the free encyclopedia.

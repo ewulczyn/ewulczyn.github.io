@@ -22,7 +22,7 @@ two designs**
 
 
 
-###A Motivating Example
+### A Motivating Example
 
 To motivate the methods, let me give you a concrete use case. The Wikimedia
 Foundation (WMF) does extensive AB testing on their fundraising banners.
@@ -129,7 +129,6 @@ To make the above theory more concrete, lets simulate running a single banner
 and use the ideas from above to model the expected return per impression.
 
 ~~~python
-
 import numpy as np
 from numpy.random import dirichlet
 from numpy.random import multinomial
@@ -176,7 +175,6 @@ return_distribution = get_posterior_reward_per_impression_sample(alpha, counts, 
 fig, ax = plt.subplots()
 ax.hist(return_distribution, bins = 40, alpha = 0.6, normed = True)
 ax.axvline(x=return_a, color = 'b')
-
 ~~~
 
 
@@ -200,7 +198,7 @@ ax.axvline(x=return_a, color = 'b')
 Indeed we see that the interval of plausible values shrunk from (1.45, 1.65) when running the banner 1000 times
 to (1.58, 1.65) when running the banners 10000 times.
 
-###Introducing Credible Intervals
+### Introducing Credible Intervals
 
 One of the most useful things we can do with our posterior distribution over
 revenue per impression is to build credible intervals. A 95% credible interval
@@ -351,7 +349,7 @@ a level of certainty about whether one design is better than another is a great
 first step. The next question you will likely want to answer is how much better
 it is.
 
-###How much better?
+### How much better?
 
 
 One approach, is to compare the absolute difference in rewards per impression.

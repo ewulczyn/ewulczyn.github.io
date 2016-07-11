@@ -62,7 +62,7 @@ while**
 What follows is the development of a method that meets these ends. It is based on simulation and the repeated evaluation of a Bayesian stopping criterion proposed by [Chris Stucchio](https://www.chrisstucchio.com/blog/2014/bayesian_ab_decision_rule.html)
 
 
-##Investigating the Effects of Repeated Testing. 
+## Investigating the Effects of Repeated Testing
 
 Before taking the leap from frequentist to Bayesian statistics, I want to explore the pros and cons of repeated hypothesis testing in a formal setting. Consider the following repeated testing procedure:
 
@@ -424,7 +424,7 @@ There is something strange going on when we run the simulation at
 significance. Intuitively, we are running through samples waiting for something unlikely to happen. It would be better to terminate the experiment when we are reasonably sure that the banners where the same and that the expected cost
 of choosing one over the other is small. The next section will try to address this shortcoming. 
 
-##Repeated Testing with a Bayesian Stopping Criterion. 
+## Repeated Testing with a Bayesian Stopping Criterion
 
 
 The procedure I will describe next also uses repeated testing, but we will swap out the
@@ -705,7 +705,7 @@ For the particular parameters I choose, the cost criterion has a uniformly highe
 When the lift is negative it also has a higher chance of declaring A the winner. This is largely because it declares the winner to be unknown much less often and so is more likely to make mistakes. The big win of the cost method comes from needing only 40% of the samples when the lift is less than 20%. The goal of the comparison is more to characterize the methods than to declare a winner. I suggest playing around with both.
 
 
-##Bayesian Tests are not Immune to Peeking
+## Bayesian Tests are not Immune to Peeking
 
 Before signing off, I want illustrate the effects of peeking at Bayesian A\B test results. The more often you peek, the more often you decide the worse banner is the winner if you set yourself a stopping criterion. In this respect, the Bayesian A/B test behaves similarly to the hypothesis test. The plot below shows the probability of A winning and the expected run time as a function of lift for different testing intervals. To generate the plots, I lowered the cost threshold to 0.001 and set the maximum sample size to 40000. We see the same pattern as in repeated hypothesis testing: you can trade off accuracy with sample size by changing the interval at which you test. 
 

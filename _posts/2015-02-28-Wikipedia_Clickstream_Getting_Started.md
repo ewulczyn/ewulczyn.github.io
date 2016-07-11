@@ -19,7 +19,7 @@ and that only a small fraction of readers went on to another article. Before
 diving into some examples of working with the data, let me give a more detailed
 explanation of how the data was collected.
 
-###Data Preparation
+### Data Preparation
 
 The data contains counts of _(referer, resource)_ pairs extracted from the
 request logs of English Wikipedia. When a client requests a resource by
@@ -100,7 +100,7 @@ request is not in the produiction enwiki.page table
 not link to the request. This can happen when clients search or spoof their
 refer
 
-#Getting to know the Data
+# Getting to know the Data
 
 There are various quirks in the data due to the dynamic nature of the network of
 articles in English Wikipedia and the prevalence of requests from automata. The
@@ -476,7 +476,7 @@ df_post['n'] = df_post[['n', 'in_count']].min(axis=1)
 del df_post['in_count']
 ~~~
 
-###Network Analysis
+### Network Analysis
 
 We can think of Wikipedia as a network with articles as nodes and links between
 articles as edges. This network has been available for analysis via the

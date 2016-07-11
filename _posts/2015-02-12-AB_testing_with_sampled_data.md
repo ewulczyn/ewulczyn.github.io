@@ -17,7 +17,7 @@ for bernoulli data that accounts for the additional uncertainty introduced by
 sampling.
 
 
-##Why do we sample impressions?
+## Why do we sample impressions?
 
 Before I dig into the theory, let me explain exactly what I mean when I say the
 impression numbers are sampled and why they are sampled. During a fundraising
@@ -38,7 +38,7 @@ should be shown based on the client's fundraising cookies server-side. I'm sure
 there are ways to get around sampling, but the fact that impressions are sampled
 is a constraint I currently face.
 
-##Estimating the number of Impressions
+## Estimating the number of Impressions
 
 The first challenge in developing theory for AB testing under these
 circumstances is to estimate how many impressions there really were \\(N\\) given
@@ -304,9 +304,7 @@ def lift_interval_covers_true_lift(interval,true_lift):
         return 0
     if interval[0] > true_lift:
         return 0
-    return 1
-
-          
+    return 1       
 ~~~
 
 
