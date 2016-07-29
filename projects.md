@@ -7,8 +7,8 @@ redirect_from:
 ---
 
 
-### DeTox (work in progress)
-A collection of machine learning models for detecting personal attacks and aggression in discussion comments. We are using the models to study the prevalence and impact of toxic comments on Wikipedia, as well as encourage the development of new moderation tools. In collaboration with [Google Jigsaw](https://jigsaw.google.com). 
+### DeTox 
+A collection of machine learning models for detecting personal attacks and aggression in discussion comments. We are using the models to study the prevalence and impact of toxic comments on Wikipedia, as well as encourage the development of new moderation tools. In collaboration with [Google Jigsaw](https://jigsaw.google.com). This is work in progress.
 
 [[homepage](https://meta.wikimedia.org/wiki/Research:Detox/Research)] [[code](https://github.com/ewulczyn/wiki-detox)] [[app](https://wikidetox.appspot.com/)]
 
@@ -16,9 +16,9 @@ ___
 
 ### Wikipedia Navigation Vectors
 
-Generated embeddings of Wikipedia articles and Wikidata items by applying Word2vec models to a corpus of billions of reading sessions. The embeddings have the property that articles that tend to be read in close succession have similar vector representations.
+An embedding of Wikipedia articles and Wikidata items by applying Word2vec models to a corpus of billions of reading sessions. The embeddings have the property that articles that tend to be read in close succession have similar vector representations. A demo app of how these vectors can be used to generate reading recommendations is linked below.
 
-[[homepage](https://meta.wikimedia.org/wiki/Research:Wikipedia_Navigation_Vectors)] [[code](https://github.com/ewulczyn/wiki-vectors)] [[data](https://meta.wikimedia.org/wiki/Research:Wikipedia_Navigation_Vectors)]
+[[homepage](https://meta.wikimedia.org/wiki/Research:Wikipedia_Navigation_Vectors)] [[code](https://github.com/ewulczyn/wiki-vectors)] [[data](https://meta.wikimedia.org/wiki/Research:Wikipedia_Navigation_Vectors)] [[app](https://tools.wmflabs.org/readmore/)]
 
 ___
 
