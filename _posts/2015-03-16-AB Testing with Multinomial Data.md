@@ -12,7 +12,7 @@ might have a low success rate but very high reward per success. We often care
 most about the expected reward of a design. If we just compare success rates and
 choose the design with the higher rate, we are not necessarily choosing the
 option with the higher expected reward. This post discusses how to do AB testing
-when the reward per impression is limited to a set of fixed values. In
+when the reward is limited to a set of fixed values. In
 particular, I demonstrate bayesian computational techniques for determining:
 
 **1. the probability that one design gives higher expected reward than another**
@@ -28,10 +28,10 @@ To motivate the methods, let me give you a concrete use case. The Wikimedia
 Foundation (WMF) does extensive AB testing on their fundraising banners.
 Usually, the fundraising team only compares the success rate of banners because
 they are optimizing for a broad donor base. As the budget continues to grow, it
-has become more important drive the donation amount per impression as well.
+has become more important drive the donation amount per user as well.
 There are several factors that influence how much people give, including the ask
 string, the set of suggested donation amounts and the payment processor
-options. In order to increase the revenue per banner impression in a principled
+options. In order to increase the revenue per user in a principled
 way, it is necessary to AB test the revenue per impression for different
 designs.
 
@@ -44,7 +44,7 @@ amounts. The image below shows a sample banner:
 
 
 In this case, there are 7 discrete amount choices given. There is, of course,
-the implicit choice of $0, which a client exercises when they do not donate at
+the implicit choice of $0, which a user exercises when they do not donate at
 all. In addition to the set of fixed choices, there is an option to enter a
 custom amount. In practice, only 2% of donors use the custom amount option. The
 image below gives an example of the empirical distribution over positive
@@ -59,7 +59,7 @@ A clear choice for modeling the distribution over fixed donation amounts is the
 multinomial distribution. For modeling custom donations amounts, we could
 consider a continuous distribution over the set of positive numbers such as the
 lognormal distribution. Then we could model the distribution of over both fixed
-and custom amounts as a mixture between the two. For now,  I will focus on just
+and custom amounts as a mixture between the two. For now, I will focus on just
 modeling the distribution over fixed amounts as they make up the vast majority
 of donations.
 
@@ -70,7 +70,7 @@ parameters \\(p\_a\\), \\(p\_b\\) governing the data generating distributions. N
 in the Bayesian setting, we consider the unknown parameters of our data generating
 distribution as random variables. In our case study, the parameters of interest
 are the vectors parameterizing the multinomial distributions over donation
-amounts for each banner.
+amounts per user for each banner.
 
 You can get a numeric representation of the distribution over a function \\(f\\) of
 your parameters \\(\mathcal P \left({ f(p\_a, p\_b) | Data}\right)\\) by sampling from
@@ -78,14 +78,14 @@ your parameters \\(\mathcal P \left({ f(p\_a, p\_b) | Data}\right)\\) by samplin
 each sample \\((p\_a, p\_b)\\). With these numeric representations, it is possible to
 find confidence intervals over \\(f(p\_a, p\_b)|Data\\) and do numerical integration
 over regions of of the parameter space that are of interest. In many cases, \\(p\_a\\)
-is independent of \\(p\_b\\). This is true in our fundraising example where clients
-are split into non-overlapping treatment groups and the clients in one treatment
-group do not affect clients in the other. A common scenario where independence
+is independent of \\(p\_b\\). This is true in our fundraising example where users
+are split into non-overlapping treatment groups and the users in one treatment
+group do not affect users in the other. A common scenario where independence
 does not hold, even for separate treatment groups, is when the groups share a
 common pool of resources to choose from. To give a concrete example, say you are
 a hotel booking site. AB testing aspects of the booking process can be hard
-since booking outcomes between the two groups interact: if a client in one group
-books a vacancy, that booking is no longer available to any other client.
+since booking outcomes between the two groups interact: if a user in one group
+books a vacancy, that booking is no longer available to any other user.
 
 When the parameters of interest are independent, then the joint posterior
 distribution factors into the product of the individual posterior distributions:
@@ -99,7 +99,7 @@ This means we can we can generate a draw from the joint posterior distribution
 by drawing once from each individual posterior distribution.
 
 
-### Getting a Distribution Over the Expected Revenue per Impression
+### Getting a Distribution Over the Expected Revenue per User
 
 When running a banner we, observe data from a multinomial distribution
 parameterized by a vector \\(p\\) where \\(p\_i\\) corresponds to the probability of
@@ -117,10 +117,10 @@ distribution. This means that if our prior distribution over \\(p\\) is
 posterior distribution over \\(p\\) is \\(Dirichlet(\alpha + c)\\).
 
 
-The expected reward of a banner is given by \\(R = p^T \cdot v\\), the dot product
+The expected reward of a banner per user is given by \\(R = p^T \cdot v\\), the dot product
 between the vector of reward values and and the vector of probabilities over
 reward values. We can sample from the posterior distribution over the expected
-revenue per impression by sampling from \\(Dirichlet(\alpha + c)\\) distribution and
+revenue per user by sampling from \\(Dirichlet(\alpha + c)\\) distribution and
 then taking a dot product between that sample and the vector of values \\(v\\).
 
 ### From Theory to Code

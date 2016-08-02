@@ -162,7 +162,7 @@ is the expectation of a negative binomial distribution. To get a sense for how t
 
 
 
-![_config.yml]({{ site.baseurl }}/images/AB_testing_with_sampled_data_files/AB_testing_with_sampled_data_16_0.png)
+![_config.yml]({{ site.baseurl }}/ipython/AB_testing_with_sampled_data/AB_testing_with_sampled_data_files/AB_testing_with_sampled_data_16_0.png)
 
 
 As mentioned above, the negative binomial random variable is the expected number
@@ -338,7 +338,7 @@ The plot below shows what fraction of 90% confidence intervals covered the true 
 as the sampling rate increases. As a sanity check, when we do not sample (\\(r=1\\)) we get correct confidence intervals. But even sampling at rate 1:100 leads to 90% confidence intervals that only
 cover the true lift 78% of the time. 
 
-![_config.yml]({{ site.baseurl }}/images/AB_testing_with_sampled_data_files/AB_testing_with_sampled_data_30_0.png)
+![_config.yml]({{ site.baseurl }}/ipython/AB_testing_with_sampled_data/AB_testing_with_sampled_data_files/AB_testing_with_sampled_data_30_0.png)
 
 
 The issue with the naive method is that we act as if we have complete certainty in the number
@@ -363,6 +363,6 @@ def get_p_dist_proper(successes, observed_failures, r):
 The plot below shows what fraction of 90% confidence intervals covered the true lift for when we sample from the
 posterior distribution over the donation rates as described above.
 
-![_config.yml]({{ site.baseurl }}/images/AB_testing_with_sampled_data_files/AB_testing_with_sampled_data_32_0.png)
+![_config.yml]({{ site.baseurl }}/ipython/AB_testing_with_sampled_data/AB_testing_with_sampled_data_files/AB_testing_with_sampled_data_32_0.png)
 
 Wonderful! We get 90% confidence intervals that cover the true lift 90% of the time, even as we ramp up the sampling rate. I am embarrassed to say that I cannot provide a proof for why this method works. If you have one, I invite you to link to it in the comments.
