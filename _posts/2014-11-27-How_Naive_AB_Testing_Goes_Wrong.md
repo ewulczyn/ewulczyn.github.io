@@ -128,7 +128,7 @@ Upper Bound 0.214
 Lets set MDE = 0.05, beta = 0.95, alpha = 0.05 and do a hypothesis test every time we get the results from n = 250 new users. For the figures below, I ran the simulation 1000 times. The first plot shows the probability of deciding that banner A is the winner as a function of the percent lift A has over B. The second plot shows the expected number of samples needed per banner to stop the test, where the gray area indicates a 90% credible interval. 
 
 
-![_config.yml]({{ site.baseurl }}/ipython/How_Naive_AB_Testing_Goes_Wrong/How_Naive_AB_Testing_Goes_Wrong_files/How_Naive_AB_Testing_Goes_Wrong_3_1.png)
+![_config.yml]({{ site.baseurl }}/ipython/how_naive_ab_testing_goes_wrong/how_naive_ab_testing_goes_wrong_files/how_naive_ab_testing_goes_wrong_3_1.png)
 
 
 
@@ -141,7 +141,7 @@ only an average of 3200 samples, less than one tenth of the classically determin
 
 Here are the results when testing only once after the classically computed number of samples.
 
-![_config.yml]({{ site.baseurl }}/ipython/How_Naive_AB_Testing_Goes_Wrong/How_Naive_AB_Testing_Goes_Wrong_files/How_Naive_AB_Testing_Goes_Wrong_4_1.png)
+![_config.yml]({{ site.baseurl }}/ipython/how_naive_ab_testing_goes_wrong/how_naive_ab_testing_goes_wrong_files/how_naive_ab_testing_goes_wrong_4_1.png)
 
 
 We see that when the lift is 0, there is roughly a 5% chance of declaring a
@@ -152,7 +152,7 @@ gain over the control CR 94.5% of the time and 5% drop 95.2% of the time. The
 results of the simulation match the design of the hypothesis test as
 expected. Here is what happens when we go to the other extreme and test after every new pair of samples:
 
-![_config.yml]({{ site.baseurl }}/ipython/How_Naive_AB_Testing_Goes_Wrong/How_Naive_AB_Testing_Goes_Wrong_files/How_Naive_AB_Testing_Goes_Wrong_5_1.png)
+![_config.yml]({{ site.baseurl }}/ipython/how_naive_ab_testing_goes_wrong/how_naive_ab_testing_goes_wrong_files/how_naive_ab_testing_goes_wrong_5_1.png)
 
 Now, we make false discoveries 66% of the time. We declare a banner with a
 5% lift over the control as the winner only 81.5% of the time and and banner
@@ -225,7 +225,7 @@ Below are the results for computing the expected cost every 250 samples and
 stopping if the expected cost drops below 0.0002. Picking a cost threshold that allows for a comparison with using hypothesis tests as a stopping criterion, is difficult. The comparison will not be straightforward, but this cost threshold gets us into the right ball park.
 
 
-![_config.yml]({{ site.baseurl }}/ipython/How_Naive_AB_Testing_Goes_Wrong/How_Naive_AB_Testing_Goes_Wrong_files/How_Naive_AB_Testing_Goes_Wrong_6_1.png)
+![_config.yml]({{ site.baseurl }}/ipython/how_naive_ab_testing_goes_wrong/how_naive_ab_testing_goes_wrong_files/how_naive_ab_testing_goes_wrong_6_1.png)
 
 A nice feature is that this method only requires 2 hyper-parameters, the cost threshold and the interval at which to evaluate the stopping criterion. Since we are not waiting for a statistical fluke to end the test at 0% lift, we don't need to set a maximum sample size. Hence, we always declare a winner. Of course, we can set a finite sample size if we need to. This will result in a non-zero chance of declaring the winner to be unknown and decrease the expected sample size, especially when the lift is small in magnitude. 
 
@@ -368,4 +368,4 @@ When the lift is negative it also has a higher chance of declaring A the winner.
 
 Before signing off, I want illustrate the effects of peeking at Bayesian A/B test results. The more often you peek, the more often you decide the worse banner is the winner if you set yourself a stopping criterion. In this respect, the Bayesian A/B test behaves similarly to the hypothesis test. The plot below shows the probability of A winning and the expected sample size as a function of lift for different testing intervals. To generate the plots, I increased the cost threshold to 0.001 and set the maximum sample size to 40000. We see the same pattern as in repeated hypothesis testing: you can trade off accuracy with sample size by changing the interval at which you test. 
 
-![_config.yml]({{ site.baseurl }}/ipython/How_Naive_AB_Testing_Goes_Wrong/How_Naive_AB_Testing_Goes_Wrong_files/How_Naive_AB_Testing_Goes_Wrong_7_1.png)
+![_config.yml]({{ site.baseurl }}/ipython/how_naive_ab_testing_goes_wrong/how_naive_ab_testing_goes_wrong_files/how_naive_ab_testing_goes_wrong_7_1.png)
