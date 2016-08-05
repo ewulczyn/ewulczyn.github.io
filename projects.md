@@ -43,13 +43,11 @@ ___
 
 A collection of blog posts containing practical advice on AB testing and some useful extensions to Bayesian hypothesis testing methods based on learnings from hundreds of tests at WMF.
 
-- <a href="{{ site.baseurl }}/What-if-AB-Testing-is-like-Science">What if AB Testing is like Science ... and most results are false?</a>
+- <a href="{{ site.baseurl }}/what_if_ab_testing_is_like_science">What if AB Testing is like Science ... and most results are false?</a>
 
-- <a href="{{ site.baseurl }}/AB-Testing-with-Multinomial-Data">Beautifully Bayesian - AB Testing with Discrete Rewards</a>
+- <a href="{{ site.baseurl }}/ab_testing_with_multinomial_data">Beautifully Bayesian - AB Testing with Discrete Rewards</a>
 
-- <a href="{{ site.baseurl }}/AB_testing_with_sampled_data">AB Testing With Sampled Data</a>
-
-- <a href="{{ site.baseurl }}/How_Naive_AB_Testing_Goes_Wrong/">How Naive AB Testing Goes Wrong and How to Fix It</a>
+- <a href="{{ site.baseurl }}/how_naive_ab_testing_goes_wrong/">How Naive AB Testing Goes Wrong and How to Fix It</a>
 
 
 ___
