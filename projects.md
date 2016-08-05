@@ -43,6 +43,9 @@ ___
 
 A collection of blog posts containing practical advice on AB testing and some useful extensions to Bayesian hypothesis testing methods based on learnings from hundreds of tests at WMF.
 
+
+- <a href="{{ site.baseurl }}/ab_testing_and_independence">AB Testing and the Importance of Independent Observations</a>
+
 - <a href="{{ site.baseurl }}/what_if_ab_testing_is_like_science">What if AB Testing is like Science ... and most results are false?</a>
 
 - <a href="{{ site.baseurl }}/ab_testing_with_multinomial_data">Beautifully Bayesian - AB Testing with Discrete Rewards</a>
