@@ -26,7 +26,7 @@ ___
 
 System for recommending articles for translation between Wikipedias. Nominated for best paper at WWW 2016.
 
-[[paper](http://arxiv.org/abs/1604.03235)] [[code](https://github.com/ewulczyn/wiki-gapfinder)] [[app](http://recommend.wmflabs.org)]
+[[paper] (http://arxiv.org/abs/1604.03235)] [[video](https://www.youtube.com/watch?v=xnn5_ObBk2o)] [[code](https://github.com/ewulczyn/wiki-gapfinder)] [[app](http://recommend.wmflabs.org)]
 
 ___
 
