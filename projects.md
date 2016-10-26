@@ -10,7 +10,7 @@ redirect_from:
 ### DeTox 
 A collection of machine learning models for detecting personal attacks and aggression in discussion comments. We are using the models to study the prevalence and impact of toxic comments on Wikipedia, as well as encourage the development of new moderation tools. In collaboration with [Google Jigsaw](https://jigsaw.google.com). This is work in progress.
 
-[[homepage](https://meta.wikimedia.org/wiki/Research:Detox/Research)] [[code](https://github.com/ewulczyn/wiki-detox)] [[app](https://wikidetox.appspot.com/)]
+[[homepage](https://meta.wikimedia.org/wiki/Research:Detox/Research)] [<a href="{{ site.baseurl }}/images/ex_machina.pdf">paper</a>] [[code](https://github.com/ewulczyn/wiki-detox)] [[app](https://wikidetox.appspot.com/)]
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 ### GapFinder 
 
-System for recommending articles for translation between Wikipedias. Nominated for best paper at WWW 2016.
+System for recommending articles for translation between Wikipedias. Nominated for [best paper](http://www2016.ca/program/bestpapercandidate.html) at WWW 2016.
 
 [[paper](http://arxiv.org/abs/1604.03235)] [[video](https://www.youtube.com/watch?v=xnn5_ObBk2o)] [[code](https://github.com/ewulczyn/wiki-gapfinder)] [[app](http://recommend.wmflabs.org)]
 
@@ -59,7 +59,7 @@ ___
 
 Built a machine learning system for automatically extracting earmarks from congressional bills and reports. The system was used to construct the first publicly available database of earmarks dating back to 1995. Won the runner-up prize at the 2015 Bloomberg Data for Good Exchange. Accepted at KDD 2016.
 
-[[homepage](https://dssg.uchicago.edu/earmarks)] [<a href="{{ site.baseurl }}/images/identifying-earmarks-congressional.pdf">paper</a>] [[code](https://github.com/dssg/machine_learning_legislation)] [[data](https://dssg.uchicago.edu/earmarks)]
+[[homepage](https://dssg.uchicago.edu/earmarks)] [[paper](http://www.kdd.org/kdd2016/subtopic/view/identifying-earmarks-in-congressional-bills/819/)] [[code](https://github.com/dssg/machine_learning_legislation)] [[data](https://dssg.uchicago.edu/earmarks)]
 
 ___
 
