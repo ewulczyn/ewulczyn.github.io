@@ -50,7 +50,7 @@ A collection of blog posts containing practical advice on AB testing and some us
 
 - <a href="{{ site.baseurl }}/ab_testing_with_multinomial_data">Beautifully Bayesian - AB Testing with Discrete Rewards</a>
 
-- <a href="{{ site.baseurl }}/how_naive_ab_testing_goes_wrong/">How Naive AB Testing Goes Wrong and How to Fix It</a>
+- <a href="{{ site.baseurl }}/How_Naive_AB_Testing_Goes_Wrong/">How Naive AB Testing Goes Wrong and How to Fix It</a>
 
 
 ___
